@@ -40,8 +40,6 @@ function mySortForKey($a, $b)
     }
 }
 //mySortForKey($arr, $b);
-
-
 ///** Реализовать функцию importXml($a). $a – путь к xml файлу (структура файла приведена ниже).
 // * Результат ее выполнения: прочитать файл $a и импортировать его в созданную БД.
 // */
@@ -62,48 +60,59 @@ function importXml($a)
     }
 
     if (file_exists($a)) {
-
         $xml = simplexml_load_file($a);
     } else {
-        exit('Не удалось открыть файл goods.xml.');
+        exit('Не удалось открыть файл $a');
     }
+
 //From object to normal array
     $arrXml = json_decode(json_encode($xml), true);
     $arrXml = $arrXml['Товар'];
-
+//var_dump($arrXml);
 //adjusting the incoming array
     foreach ($arrXml as $key => $elem) {
-        if ($elem['@attributes']) { // delete @ in @attributes
-            $arrXml[$key]['attributes'] = $elem['@attributes'];
-            unset($arrXml[$key]['@attributes']);
-        }
+       // checking for existing data in the database
+        $arCode_prod = $elem["@attributes"]["Код"];
+        $arName = $elem["@attributes"]["Название"];
+        $sql=   "SELECT * FROM a_product WHERE code_prod = '$arCode_prod' and name = '$arName'";
+        $res = $db->query($sql);
+
+            if($res->fetchColumn() > 0){//  if there is an entry in DB
+                unset($arrXml[$key]); // remove from result array
+                $arrCopyElem [] = "$arName";// to show warnings
+                }
+            else{
+                if ($elem['@attributes']) { // delete @ in @attributes
+                    $arrXml[$key]['attributes'] = $elem['@attributes'];
+                    unset($arrXml[$key]['@attributes']);
+                }
 // from an associative array to a simple)
-        if (isset($elem['Свойства']['Формат']) && is_array($elem['Свойства']['Формат'])) {
-            //var_dump($elem['Свойства']);
-            foreach ($elem['Свойства']['Формат'] as $key1 => $elem1) {
-                $format = "Формат" . $key1;
-                $arrXml["$key"]['Свойства'] [$format] = $elem1;
-                unset($arrXml["$key"]['Свойства']['Формат']);
+                if (isset($elem['Свойства']['Формат']) && is_array($elem['Свойства']['Формат'])) {
+                    //var_dump($elem['Свойства']);
+                    foreach ($elem['Свойства']['Формат'] as $key1 => $elem1) {
+                        $format = "Формат" . $key1;
+                        $arrXml["$key"]['Свойства'] [$format] = $elem1;
+                        unset($arrXml["$key"]['Свойства']['Формат']);
+                    }
+                }
+                //added type price
+                if (isset($elem['Цена'])) {
+                    $arrXml["$key"]['Цена'] = array_combine(array('Базовая', 'Москва'), array_values($elem['Цена']));
+                }
+                if (isset($elem['Разделы']) && is_array($elem['Разделы']['Раздел'])) {
+                    $count = count($elem['Разделы']['Раздел']);
+                    for ($i = 0; $i < $count; $i++) {
+                        $arrXml["$key"]['Разделы'][] .= $elem['Разделы']['Раздел'][$i];    //$elem['Свойства']['Формат'][$i];
+                    }
+                    unset($arrXml["$key"]['Разделы']['Раздел']);
+                }
             }
-        }
-        //added type price
-        if (isset($elem['Цена'])) {
-
-            $arrXml["$key"]['Цена'] = array_combine(array('Базовая', 'Москва'), array_values($elem['Цена']));
-        }
-        if (isset($elem['Разделы']) && is_array($elem['Разделы']['Раздел'])) {
-
-            $count = count($elem['Разделы']['Раздел']);
-            for ($i = 0; $i < $count; $i++) {
-                $arrXml["$key"]['Разделы'][] .= $elem['Разделы']['Раздел'][$i];    //$elem['Свойства']['Формат'][$i];
-            }
-            unset($arrXml["$key"]['Разделы']['Раздел']);
-        }
     }
-
+var_dump($arrXml);
+    $countRow=0;
     foreach ($arrXml as $key => $elem) {
-
         //*  insert table product
+        $countRow++;
         $sql = "INSERT INTO a_product (code_prod, name) VALUES (:code_prod, :name)";
         $query = $db->prepare($sql);
         $query->execute(array(
@@ -134,6 +143,7 @@ function importXml($a)
             }
         }
 //---- for insert  table property
+        var_dump($elem['Свойства']);
         if ($elem['Свойства']) {
             // var_dump($arrValProp);
             $type_prop = array_keys($elem['Свойства']);
@@ -165,10 +175,13 @@ function importXml($a)
             }
         }
     }
-    echo "import completed";
+    if(isset( $arrCopyElem )){
+        foreach ($arrCopyElem as $elem){
+            echo  "продукт " .$elem . " не добавлен в базу данных т.к. он уже существует" ."<br>";
+        }
+    } echo "import completed added $countRow row";
 }
-
-$path = "files/goods2.xml";
+$path = "files/goods.xml";
 //importXml($path);
 //--------------------------------------------------------------------------------------
 
@@ -190,6 +203,7 @@ function exportXml($a, $b)
     } catch (PDOException $e) {
         echo $e->getMessage();
     }
+
 
     // список категории вместе с ее детьми
     $sql = "SELECT t1.name_categ AS lev1, t2.name_categ as lev2, t3.name_categ as lev3, t4.name_categ as lev4
@@ -213,6 +227,7 @@ FROM list_category AS t1
         }
         //добавляем в sql запрос категорию и ее вложенные категории
         $arCat = array_unique($arCat);
+        var_dump($arCat);
         $sqlAdded = "WHERE cat.name = '$b'";
         foreach ($arCat as $key => $elem) {
             if($key != 0){
@@ -274,7 +289,7 @@ join a_category cat on a_pri.id_prod = cat.id_prod $sqlAdded";
                 $arResult[$elem['id_prod']]['Разделы']  [] = $elem['name'];
             }
         }
-
+ //var_dump($arResult);
         // формированиe xml файла при помощи API XMLWriter.
         $xw = new XMLWriter();
         $xw->openMemory();
@@ -326,23 +341,19 @@ join a_category cat on a_pri.id_prod = cat.id_prod $sqlAdded";
         // сохрагнения  в фалу путь $a
         if(file_put_contents($a, $file)){
             // rules
-            chmod($a, 0777);
+
             echo "export completed";
         }
-
-
-
     }else{
         echo " в рубрикие $b нет елементов или ее несуществует ";
 }
-
-
 }
 
 
 //$b ="Бумага";
+//$b ="goods";
 //$b = "Картон";
-$b = "Принтеры";
+//$b = "Принтеры";
 //$b = "Картон";
 //$b = "Картон цветной";
 
