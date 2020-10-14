@@ -227,7 +227,7 @@ FROM list_category AS t1
         }
         //добавляем в sql запрос категорию и ее вложенные категории
         $arCat = array_unique($arCat);
-        var_dump($arCat);
+     //   var_dump($arCat);
         $sqlAdded = "WHERE cat.name = '$b'";
         foreach ($arCat as $key => $elem) {
             if($key != 0){
@@ -277,89 +277,77 @@ join a_category cat on a_pri.id_prod = cat.id_prod $sqlAdded";
         }
         //select category
         $sql = "SELECT id_prod,name From a_category cat $sqlAdded ";
-//    if($b =="Принтеры" OR $b =="МФУ"  ){
-//        $sqlAdded = "WHERE name='Принтеры' or name= 'МФУ'";
-//    }
-//    $sql = "SELECT * From a_category cat $sqlAdded ";
+    if($b =="Принтеры" OR $b =="МФУ"  ){
+        $sqlAdded = "WHERE name='Принтеры' or name= 'МФУ'";
+    }
+    $sql = "SELECT * From a_category cat $sqlAdded ";
         $dbArtists = $db->prepare($sql);
         $dbArtists->execute();
         $arDb = $dbArtists->fetchAll(PDO::FETCH_ASSOC);
+       // var_dump($arDb);
         foreach ($arDb as $key => $elem) {
             if ($arResult[$elem['id_prod']]["id"] == $elem ["id_prod"]) {
                 $arResult[$elem['id_prod']]['Разделы']  [] = $elem['name'];
             }
         }
- //var_dump($arResult);
-        // формированиe xml файла при помощи API XMLWriter.
-        $xw = new XMLWriter();
-        $xw->openMemory();
-        $xw->startDocument("1.0", "windows-1251");
-        $xw->startElement("Товары");
-        foreach ($arResult as $elem) {
-            $xw->startElement("Товар");
-            $xw->writeAttribute('Код', $elem['Код']);
-            $xw->writeAttribute('Название', $elem['Название']);
-            foreach ($elem['Цена'] as $key => $elem1) {
-                $xw->startElement('Цена');
-                $xw->writeAttribute("Тип", $key);
-                $xw->text("$elem1");
-                $xw->endElement();
-            }
-            $xw->startElement("свойства");
-            foreach ($elem['Cвойства'] as $key => $elem1) {
-                $xw->startElement(preg_replace('#[0-1]#', '', $key));
-                if ($key == "Белизна") {
-                    $xw->writeAttribute("ЕдИзм", '%');
-                }
-                $xw->text("$elem1");
-                $xw->endElement();
-            }
-            $xw->endElement();
-            $xw->startElement('Разделы');
-        //    var_dump($elem['Разделы']);
-            foreach ($elem['Разделы'] as $key => $elem) {
-                // var_dump($elem );
-                if($elem =='Принтеры' ){
-                    $xw->startElement("Раздел");
-                    $xw->text("МФУ");
-                    $xw->endElement();
-                }
-                if($elem =='МФУ' ){
-                    $xw->startElement("Раздел");
-                    $xw->text("МФУ");
-                    $xw->endElement("Принтеры");
-                }
-                $xw->startElement("Раздел");
-                $xw->text("$elem");
-                $xw->endElement();
-            }
-            $xw->endElement();
-            $xw->endElement();
-        }
-        $xw->endElement();
-        $file = $xw->outputMemory();
-        // сохрагнения  в фалу путь $a
-        if(file_put_contents($a, $file)){
-            // rules
+ //var_dump($arResult["2972"]);
 
-            echo "export completed";
-        }
-    }else{
-        echo " в рубрикие $b нет елементов или ее несуществует ";
-}
-}
+        $dom = new domDocument("1.0", "windows-1251"); // Создаём XML-документ версии 1.0 с кодировкой utf-8
+        $products = $dom->createElement("Товары"); // Создаём корневой элемент
+        $dom->appendChild($products);
 
+       foreach($arResult as $key=>$elem){
+
+            $product = $dom->createElement("Товар"); // Создаём узел
+            $products->appendChild($product); // Добавляем в корневой узел
+            $product->setAttribute("Код", $elem["Код"]); //
+            $product->setAttribute("Название", $elem["Название"]); // Устанавливаем атрибут
+
+            $price1 = $dom->createElement("Цена", $elem["Цена"]["Базовая"]); // Создаём узел  с текстом внутри
+            $price1->setAttribute("Тип", "Базовая"); // Устанавливаем атрибут
+            $product->appendChild($price1); // Добавляем в узел
+
+            $price2 = $dom->createElement("Цена", $elem["Цена"]["Москва"]); // Создаём узелс текстом внутри
+            $price2->setAttribute("Тип", "Москва");
+            $product->appendChild($price2); // Добавляем в узел "user" узел "login"
+
+
+              $properties = $dom->createElement("Свойства"); // Создаём узел
+              $product->appendChild($properties);
+              foreach($elem["Cвойства"] as $keyProp=>$elemProp){
+                  $keyProp = preg_replace('#[0-1]#', '', $keyProp);
+                         $property = $dom->createElement($keyProp,$elemProp); // Создаём узел с текстом внутри
+                  if($keyProp == "Белизна"){
+                      $property->setAttribute("ЕдИзм", "%"); // Устанавливаем атрибут
+                  }
+                  $properties->appendChild($property);
+              }
+
+               $sections  = $dom->createElement("Разделы"); // Создаём узел "login" с текстом внутри
+                 $product->appendChild($sections); // Добавляем в узел
+               foreach($elem["Разделы"] as $keySect=>$elemSect) {
+
+                   $section1  = $dom->createElement("Раздел",$elemSect); // Создаём узел  с текстом внутри
+                   $sections->appendChild($section1); // Добавляем в узел
+               }
+          }
+       if($dom->save("files/export.xml")){   // Сохраняем полученный XML-документ в файл
+           echo "export completed";
+       }
+
+} else
+    echo " в рубрикие $b нет елементов или ее несуществует ";
+}
 
 //$b ="Бумага";
 //$b ="goods";
 //$b = "Картон";
-//$b = "Принтеры";
+$b = "Принтеры";
+//$b = "МФУ";
 //$b = "Картон";
 //$b = "Картон цветной";
-
 $path = "files/export.xml";
-
-exportXml( $path,$b);
+//exportXml( $path,$b);
 
 ?>
 
