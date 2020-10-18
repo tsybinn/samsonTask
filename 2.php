@@ -348,7 +348,7 @@ $b = "Принтеры";
 //$b = "Картон цветной";
 $path = "files/export.xml";
 //exportXml( $path,$b);
-
+echo "727";
 ?>
 
 

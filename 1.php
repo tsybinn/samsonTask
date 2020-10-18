@@ -1,4 +1,4 @@
-<?
+<?php
 //Реализовать функцию findSimple ($a, $b). $a и $b – целые положительные числа. Результат ее выполнение:
 // массив простых чисел от $a до $b.
 function findSimple($a, $b)
@@ -147,7 +147,7 @@ function getSizeForLimit($a, $b)
     TH {
         background: #b0e0e6;
     } </style>
-<?
+<?php
 
 function printTrapeze($a)
 {
