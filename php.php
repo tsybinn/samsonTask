@@ -1,5 +1,0 @@
-<?
-
-mysql_connect () ;
-
-phpinfo();

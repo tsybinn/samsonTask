@@ -1,5 +1,13 @@
 <?php
 $arUrlRewrite=array (
+  3 => 
+  array (
+    'CONDITION' => '#^/admin/users/#',
+    'RULE' => '',
+    'ID' => 'customComponents:user.Complex',
+    'PATH' => '/admin/users/index.php',
+    'SORT' => 100,
+  ),
   0 => 
   array (
     'CONDITION' => '#^/services/#',

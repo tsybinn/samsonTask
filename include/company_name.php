@@ -1,1 +1,4 @@
-<img src="/include/bx_default_logo.gif"  />
+<div class="comName">
+    <h4>Компания&nbsp; <br>
+        Столплит</h4>
+</div>
