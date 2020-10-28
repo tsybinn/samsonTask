@@ -1,8 +1,8 @@
 <?
 $sSectionName = "Акции";
 $arDirProperties = Array(
-   "description" => "Акции",
-   "keywords" => "Акции",
-   "title" => "Акции"
+   "description" => "Условия сотрудничества",
+   "keywords" => "Условия сотрудничества",
+   "title" => "Условия сотрудничества"
 );
 ?>

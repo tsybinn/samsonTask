@@ -129,6 +129,12 @@ if ($this->startResultCache()) {
     }
 
    $arResult [LIST_ELEMENT_SIMILAR]  = $arLinks;
+
+    if ($arParams["SET_BROWSER_TITLE"] === 'Y')
+    {
+        if ($arResult["META_TAGS"]["BROWSER_TITLE"] !== '')
+            $APPLICATION->SetPageProperty("title", $arResult["NAME"], $arTitleOptions);
+    }
    // var_dump($rResult);
     $this->IncludeComponentTemplate();  //connection template
 }

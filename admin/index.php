@@ -1,8 +1,19 @@
 <?
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("admin");
-?>
-<?//if(CModule::IncludeModule("iblock")) {
+?><?$APPLICATION->IncludeComponent(
+	"customComponents:user.viewing", 
+	".default", 
+	array(
+		"CACHE_TIME" => "36000000",
+		"CACHE_TYPE" => "A",
+		"SEF_FOLDER" => "/admin/",
+		"SEF_MODE" => "N",
+		"SET_TITLE" => "Y",
+		"COMPONENT_TEMPLATE" => ".default"
+	),
+	false
+);?><?//if(CModule::IncludeModule("iblock")) {
 //    $el = new CIBlockElement;
 //
 //    $params = array(
@@ -108,7 +119,4 @@ $APPLICATION->SetTitle("admin");
 //
 //
 //}
-//?>
-
-
-<?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php")?>
+//?><?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php")?>

@@ -1,14 +1,22 @@
 <?php
 $arUrlRewrite=array (
-  3 => 
+  4 => 
   array (
     'CONDITION' => '#^/admin/users/#',
     'RULE' => '',
-    'ID' => 'customComponents:user.Complex',
+    'ID' => 'customComponents:user.viewing',
     'PATH' => '/admin/users/index.php',
     'SORT' => 100,
   ),
-  0 => 
+  2 => 
+  array (
+    'CONDITION' => '#^/products/#',
+    'RULE' => '',
+    'ID' => 'bitrix:catalog',
+    'PATH' => '/catalog/index.php',
+    'SORT' => 100,
+  ),
+  3 => 
   array (
     'CONDITION' => '#^/services/#',
     'RULE' => '',
@@ -17,14 +25,6 @@ $arUrlRewrite=array (
     'SORT' => 100,
   ),
   1 => 
-  array (
-    'CONDITION' => '#^/products/#',
-    'RULE' => '',
-    'ID' => 'bitrix:catalog',
-    'PATH' => '/products/index.php',
-    'SORT' => 100,
-  ),
-  2 => 
   array (
     'CONDITION' => '#^/news/#',
     'RULE' => '',
