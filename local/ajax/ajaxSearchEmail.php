@@ -1,5 +1,5 @@
 <?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/prolog_before.php"); // --- подключаем пролог ядра
-//CModule::IncludeModule("iblock"); // --- подключаем модуль инфоблок
+
 if (!empty($_POST['search'])) {
     $search = trim($_POST['search']);
     $search = $search."%";

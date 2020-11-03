@@ -1,36 +1,22 @@
 
 $(document).ready(function () {
-
-
     $('.arrow-up').on('click', function() {
-
         $('.userList tr').sort(function(a, b) { // сортируем
-            return +$(a).find('[data-name=sort]').attr('data-value') - +$(b).find('[data-name=sort]').attr('data-value');
+           return +$(a).find('[data-name=sort]').attr('data-value') - +$(b).find('[data-name=sort]').attr('data-value');
         })
             .appendTo('.userList');// возвращаем в контейнер
-
     });
     $('.arrow-down').on('click', function() {
-
         $('.userList tr').sort(function(a, b) { // сортируем
             return +$(b).find('[data-name=sort]').attr('data-value') - +$(a).find('[data-name=sort]').attr('data-value');
         })
             .appendTo('.userList');// возвращаем в контейнер
-
     });
-
-
-
-
-
-
-
 
     var $result = $('#search_box-result');
 //console.log($result);
     $('#search').on('keyup', function () {
         var search = $(this).val();
-
         if ((search != '') && (search.length > 1)) {
             // console.log(search);
             $.ajax({

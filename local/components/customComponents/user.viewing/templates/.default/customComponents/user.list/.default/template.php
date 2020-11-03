@@ -11,11 +11,7 @@
 /** @var string $componentPath */
 /** @var CBitrixComponent $component */
 $this->setFrameMode(true);
-//var_dump($arResult);
 ?>
-
-
-
 <div class="search_box">
     <form action="">
         <input type="text" name="search" id="search" placeholder="Введите email">
@@ -23,14 +19,8 @@ $this->setFrameMode(true);
     </form>
     <div id="search_box-result"></div>
 </div>
-
-
 <?
-
-
 if ($arResult) {
-
-
     echo "<table class='userList'>
   <tr>
    <th>ID</th>
@@ -42,14 +32,10 @@ if ($arResult) {
    <th>LOGIN</th>
    <th>MORE</th>
   </tr>"; ?>
-
-
     <?
 
     foreach ($arResult as $key => $elem) {
-
         echo "<tr>";
-
         echo "<td>" . $elem['ID'] . "</td>";
         echo "<td>" . $elem['NAME'] . "</td>";
         echo "<td>" . $elem['LAST_NAME'] . "</td>";
@@ -65,9 +51,3 @@ if ($arResult) {
 ?>
 
 
-<script>
-
-
-
-
-</script>

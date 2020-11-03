@@ -1,5 +1,7 @@
 
 
+
+
     $(document).ready(function () {
     $('.content_toggle').click(function () {
         button = $(this);
@@ -12,4 +14,6 @@
         });
     });
 });
+
+
 

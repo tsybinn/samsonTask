@@ -12,10 +12,16 @@ IncludeTemplateLangFile(__FILE__);
 
   <?  use Bitrix\Main\Page\Asset;
   Asset::getInstance()->addCss(SITE_TEMPLATE_PATH . "/template_style.css");
+
   Asset::getInstance()->addJs(SITE_TEMPLATE_PATH . "/js/jquery-1.8.2.min.js");
   Asset::getInstance()->addJs(SITE_TEMPLATE_PATH . "/js/slides.min.jquery.js");
   Asset::getInstance()->addJs(SITE_TEMPLATE_PATH . "/js/jquery.carouFredSel-6.1.0-packed.js");
   Asset::getInstance()->addJs(SITE_TEMPLATE_PATH . "/js/functions.js");
+ // Asset::getInstance()->addJs(SITE_TEMPLATE_PATH . "/js/fancybox/jquery.fancybox.js");
+ // Asset::getInstance()->addJs(SITE_TEMPLATE_PATH . "/js/fancybox/jquery.fancybox-1.3.4.pack.js");
+  //Asset::getInstance()->addCss(SITE_TEMPLATE_PATH . "/js/fancybox/jquery.fancybox.css");
+
+
 
   ?>
 </head>
