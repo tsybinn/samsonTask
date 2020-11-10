@@ -1,8 +1,9 @@
 <?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();?>
 <?
-
+//var_dump($arParams);
 $arDefaultUrlTemplates404 = array(
-	"users" => "",
+	"users" => "/admin/users/",
+	"userTree" => "user-new/",
 	"user" => "#CODE#/",
 	);
 
@@ -17,7 +18,7 @@ if($arParams["SEF_MODE"] == "Y")
 		$arUrlTemplates,
 		$arVariables
 		);
-		
+
 	if(!$componentPage)
 	{
 		$componentPage = "users";

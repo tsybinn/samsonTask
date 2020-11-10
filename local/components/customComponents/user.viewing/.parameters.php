@@ -15,6 +15,11 @@ $arComponentParameters = array(
 				"DEFAULT" => "#CODE#/",
 				"VARIABLES" => "",
 			),
+			"userTree" => array(
+				"NAME" => "3 последние регистрации",
+				"DEFAULT" => "admin/user-new/",
+				"VARIABLES" => "",
+			),
 		),
 		"SET_TITLE" => Array(),
 		"CACHE_TIME"  =>  Array("DEFAULT"=>36000000),

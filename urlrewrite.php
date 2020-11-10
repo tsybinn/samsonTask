@@ -1,6 +1,6 @@
 <?php
 $arUrlRewrite=array (
-  4 => 
+  6 => 
   array (
     'CONDITION' => '#^/admin/users/#',
     'RULE' => '',
@@ -22,6 +22,14 @@ $arUrlRewrite=array (
     'RULE' => '',
     'ID' => 'bitrix:catalog',
     'PATH' => '/services/index.php',
+    'SORT' => 100,
+  ),
+  7 => 
+  array (
+    'CONDITION' => '#^/admin/#',
+    'RULE' => '',
+    'ID' => 'customComponents:user.viewing',
+    'PATH' => '/admin/user-new/index.php',
     'SORT' => 100,
   ),
   1 => 

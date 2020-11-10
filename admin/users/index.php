@@ -13,14 +13,9 @@ $APPLICATION->SetTitle("Пользователи");
 		"COMPONENT_TEMPLATE" => ".default",
 		"SEF_FOLDER" => "/admin/users/",
 		"SEF_URL_TEMPLATES" => array(
-			"users" => "/admin/users/",
+			"users" => "admin/users/",
 			"user" => "#CODE#/",
-			"search" => "search/?s=#CODE#/",
-		),
-		"VARIABLE_ALIASES" => array(
-			"search" => array(
-				"CODE" => "s",
-			),
+			"userTree" => "admin/user-new/",
 		)
 	),
 	false

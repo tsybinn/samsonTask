@@ -13,6 +13,27 @@ $aMenuLinks = Array(
 		Array(), 
 		Array(), 
 		"" 
+	),
+	Array(
+		"rand_product", 
+		"/admin/rand-product.php", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"img_upload", 
+		"/admin/img-upload.php", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"user_new", 
+		"/admin/user-new/", 
+		Array(), 
+		Array(), 
+		"" 
 	)
 );
 ?>
