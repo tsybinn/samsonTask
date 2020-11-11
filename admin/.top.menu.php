@@ -34,6 +34,13 @@ $aMenuLinks = Array(
 		Array(), 
 		Array(), 
 		"" 
+	),
+	Array(
+		"test", 
+		"/admin/test.php", 
+		Array(), 
+		Array(), 
+		"" 
 	)
 );
 ?>

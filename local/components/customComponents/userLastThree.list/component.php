@@ -3,8 +3,8 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 //** проверка на актуальный кеш */
 if ($this->startResultCache($arParams['CACHE_TIME'])) {
 
-    $by = "last_login";
-    $order = "ASC";
+    $by = "DATE_REGISTER";
+    $order = "DESC";
     $arParams = array(
         "FIELDS" => array(
             "ID",
@@ -19,7 +19,7 @@ if ($this->startResultCache($arParams['CACHE_TIME'])) {
     );
     $rsUsers = CUser::GetList($by, $order, false, $arParams);
     while ($arItem = $rsUsers->GetNext()) {
-        $arItem ['LAST_LOGIN_DATE'] = strtotime($arItem['LAST_LOGIN_DATE']);
+        //$arItem ['LAST_LOGIN_DATE'] = strtotime($arItem['LAST_LOGIN_DATE']);
               $arUsers [] = $arItem;
     }
     $arResult = $arUsers;
