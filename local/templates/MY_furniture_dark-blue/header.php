@@ -32,7 +32,7 @@ IncludeTemplateLangFile(__FILE__);
 	<div id="page-wrapper">
 	<div id="panel"><?$APPLICATION->ShowPanel();?></div>
 		<div id="header">
-			
+
 			<table id="logo">
 				<tr>
 					<td><a href="<?=SITE_DIR?>" title="<?=GetMessage('CFT_MAIN')?>"><?
@@ -44,9 +44,10 @@ $APPLICATION->IncludeFile(
 ?></a></td>
 				</tr>
 			</table>
-			
+
 			<div id="top-menu">
-				<div id="top-menu-inner">
+             <span class="nameProd">  <?$APPLICATION->ShowViewContent("NAME_Product");?></span>
+                <div id="top-menu-inner">
 <?$APPLICATION->IncludeComponent(
 	"bitrix:menu", 
 	"MY_horizontal_multilevel1", 

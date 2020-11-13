@@ -390,3 +390,18 @@ div.content-form { padding-left:1em; }
 #logo a{
 	text-decoration: none;
 }
+
+.nameProd{
+	color: #ff0000;
+	font-weight: bold;
+	font-size: 18px;
+	position: absolute;
+
+
+}
+
+.nameProd p{
+
+	margin-top: -20px ;
+	margin-left: -65px;
+}

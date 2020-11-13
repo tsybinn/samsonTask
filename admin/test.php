@@ -5,7 +5,7 @@ $APPLICATION->SetTitle("test");
 	"bitrix:main.register", 
 	".default", 
 	array(
-		"AUTH" => "Y",
+		"AUTH" => "N",
 		"REQUIRED_FIELDS" => array(
 		),
 		"SET_TITLE" => "Y",

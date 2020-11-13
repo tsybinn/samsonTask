@@ -1,4 +1,9 @@
 <?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();?>
+
+<?$this->SetViewTarget("NAME_Product");?>
+<p><?=$arResult["NAME"]?></p>
+<?$this->EndViewTarget();?>
+
 <div class="catalog-detail">
 	<div class="catalog-item">
 <?
