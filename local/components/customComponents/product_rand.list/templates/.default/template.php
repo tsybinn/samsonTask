@@ -67,16 +67,15 @@
             <?if($arParams["DISPLAY_PICTURE"]!="N" && is_array($arItem["DETAIL_PICTURE"])):?>
                 <div style="clear:both"></div>
             <?endif?>
-            <?foreach($arItem["DISPLAY_PROPERTIES"] as $pid=>$arProperty):?>
-                <small>
-                    <?=$arProperty["NAME"]?>:&nbsp;
+            <small>
+
+       <?          if($arItem["PROPERTY_SHOW_COUNTER_VALUE"]):?>
+                <span> число показо:&nbsp;</span>
+                <span class="voitingRes"><?=$arItem["PROPERTY_SHOW_COUNTER_VALUE"];?></span>
 
 
-                    <span class="voitingRes"><?=$arProperty["DISPLAY_VALUE"];?></span>
-
-
-                </small><br />
-            <?endforeach;?>
+            </small><br />
+<?endif;?>
         </div>
     <?endforeach;?>
     <?if($arParams["DISPLAY_BOTTOM_PAGER"] == "Y"):?>

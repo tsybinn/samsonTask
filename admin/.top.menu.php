@@ -15,6 +15,13 @@ $aMenuLinks = Array(
 		"" 
 	),
 	Array(
+		"form", 
+		"/admin/form/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
 		"rand_product", 
 		"/admin/rand-product.php", 
 		Array(), 

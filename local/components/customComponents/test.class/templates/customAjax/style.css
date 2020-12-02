@@ -1,0 +1,30 @@
+
+.showAnswer {
+	width: 600px;
+	border-collapse: collapse;
+}
+.showAnswer TD, TH, tr {
+	padding: 3px;
+	border: 1px solid black;
+	text-align: center;
+}
+.showAnswer TH {
+	background: #b0e0e6;
+}
+
+#feedback {display:none;}
+
+
+.commentOFF{
+	display: none;
+}
+.comment{
+	display: block;
+}
+
+#feedback {
+	display: none;
+}
+.mes{
+	color:green;
+}

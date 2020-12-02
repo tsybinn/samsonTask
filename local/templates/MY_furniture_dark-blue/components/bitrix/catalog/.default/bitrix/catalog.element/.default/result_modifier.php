@@ -20,4 +20,19 @@ if (!is_array($arResult['SECTION']))
 
 $arResult['PRICES']['PRICE']['PRINT_VALUE'] = number_format($arResult['PROPERTIES']['PRICE']['VALUE'], 0, '.', ' ');
 $arResult['PRICES']['PRICE']['PRINT_VALUE'] .= ' '.$arResult['PROPERTIES']['PRICECURRENCY']['VALUE_ENUM'];
+
+
+if($_SESSION["SESS_AUTH"]['AUTHORIZED'] == "Y"){
+    $user = \Bitrix\Main\UserTable::getById($_SESSION["SESS_AUTH"]["USER_ID"])->fetch();
+    $arResult["USER"]["LAST_NAME"] = $user["LAST_NAME"];
+    $arResult["USER"]["NAME"] = $user["NAME"];
+    $arResult["USER"]["PERSONAL_MOBILE"] = $user["PERSONAL_MOBILE"];
+    $arResult["USER"]["SECOND_NAME"] = $user["SECOND_NAME"];
+
+
+}
+
+
+
+
 ?>
